@@ -1,15 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './Counter.module.css';
+import {
+    decrement,
+    increment,
+    selectCount,
+} from './features/counter/counterSlice';
+import { useAppDispatch, useAppSelector } from './app/hooks';
 
 export const DemoCounter = () => {
-    const [count, setCount] = useState(0);
+    const count = useAppSelector(selectCount);
+    const dispatch = useAppDispatch();
+
     return (
         <div>
             <div className={styles.row}>
                 <button
                     className={styles.button}
                     aria-label='Decrement value'
-                    onClick={() => setCount(current => current - 1)}>
+                    onClick={() => dispatch(decrement())}>
                     -
                 </button>
                 <span
@@ -20,7 +28,7 @@ export const DemoCounter = () => {
                 <button
                     className={styles.button}
                     aria-label='Increment value'
-                    onClick={() => setCount(current => current + 1)}>
+                    onClick={() => dispatch(increment())}>
                     +
                 </button>
             </div>
