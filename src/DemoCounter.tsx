@@ -1,11 +1,11 @@
-import React from 'react';
 import styles from './Counter.module.css';
+import { useAppDispatch, useAppSelector } from './app/hooks';
 import {
     decrement,
+    fetchUsers,
     increment,
     selectCount,
 } from './features/counter/counterSlice';
-import { useAppDispatch, useAppSelector } from './app/hooks';
 
 export const DemoCounter = () => {
     const count = useAppSelector(selectCount);
@@ -30,6 +30,16 @@ export const DemoCounter = () => {
                     aria-label='Increment value'
                     onClick={() => dispatch(increment())}>
                     +
+                </button>
+            </div>
+            <div className={styles.row}>
+                <button
+                    className={styles.asyncButton}
+                    onClick={() => {
+                        console.log('check')
+                        dispatch(fetchUsers());
+                    }}>
+                    Add Async
                 </button>
             </div>
         </div>
