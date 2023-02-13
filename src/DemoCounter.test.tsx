@@ -1,10 +1,11 @@
-/* eslint-disable testing-library/no-debugging-utils */
-import { render, screen } from "@testing-library/react";
-import { DemoCounter } from "./DemoCounter";
-describe("render DemoCounter", () => {
-  it("should render all elements", () => {
-    render(<DemoCounter />);
+import { render, screen } from '@testing-library/react';
+import { DemoCounter } from './DemoCounter';
+describe('render DemoCounter', () => {
+    it('should render all elements', () => {
+        render(<DemoCounter />);
 
-    screen.debug();
-  });
+        expect(screen.getByText('DemoCounter')).toBeInTheDocument();
+        expect(screen.getByRole('textbox')).toBeInTheDocument();
+        expect(screen.getAllByRole('button')).toHaveLength(2);
+    });
 });
