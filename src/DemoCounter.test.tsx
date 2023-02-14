@@ -46,12 +46,14 @@ describe('render DemoCounter', () => {
             },
         });
     });
+
     afterEach(() => {
         server.resetHandlers();
     });
+
     afterAll(() => server.close());
 
-    it('should count by button press', async () => {
+    it('should have default of 0', () => {
         render(
             <Provider store={store}>
                 <DemoCounter />
@@ -59,21 +61,47 @@ describe('render DemoCounter', () => {
         );
 
         expect(screen.getByTestId('count-element')).toHaveTextContent('0');
+    });
+
+    it('should count increment on click', () => {
+        render(
+            <Provider store={store}>
+                <DemoCounter />
+            </Provider>
+        );
+
         fireEvent.click(
             screen.getByRole('button', { name: 'Increment value' })
         );
-        fireEvent.click(
-            screen.getByRole('button', { name: 'Increment value' })
+
+        expect(screen.getByTestId('count-element')).toHaveTextContent('1');
+    });
+
+    it('should decrement on click', () => {
+        render(
+            <Provider store={store}>
+                <DemoCounter />
+            </Provider>
         );
-        expect(screen.getByTestId('count-element')).toHaveTextContent('2');
+
         fireEvent.click(
             screen.getByRole('button', { name: 'Decrement value' })
         );
-        expect(screen.getByTestId('count-element')).toHaveTextContent('1');
+
+        expect(screen.getByTestId('count-element')).toHaveTextContent('-1');
+    });
+
+    it('should increment with length of data on Add Async button click ', async () => {
+        render(
+            <Provider store={store}>
+                <DemoCounter />
+            </Provider>
+        );
 
         fireEvent.click(screen.getByRole('button', { name: 'Add Async' }));
+
         await waitFor(() => {
-            expect(screen.getByTestId('count-element')).toHaveTextContent('11');
+            expect(screen.getByTestId('count-element')).toHaveTextContent('10');
         });
     });
 });
